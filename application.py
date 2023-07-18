@@ -3,6 +3,7 @@ import pandas_datareader as web
 import numpy as np
 import datetime as dt
 import matplotlib.pyplot as plt
+import yfinance as yf
 from flask import Flask
 from flask_cors import CORS
 
@@ -85,7 +86,7 @@ def stock_test(model_path, stock_name, test_start_date, test_end_date, predictio
 
 
 def stock_predict(model_path, stock_name, duration, prediction_days):
-    dataset = web.DataReader(stock_name, "yahoo", dt.datetime(2022, 1, 1), dt.datetime.now())
+    dataset = yf.download(stock_name, dt.datetime(2022, 1, 1), dt.datetime.now())
     # Get past 30 days real data
     predict_actual_dataset = dataset[-duration:]
     predict_actual_price = predict_actual_dataset["Close"].values
